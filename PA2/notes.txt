@@ -1,0 +1,6 @@
+NEED TO IMPLEMENT THE FOLLOWING
+
+What if number not in list?
+What if multiple instances of number?
+
+Make print to know when successful --> error only occurs when printing, else can add, delete,insert and count just fine
