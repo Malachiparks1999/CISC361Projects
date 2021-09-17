@@ -1,0 +1,228 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=windows-1252">
+<title>CISC361-010 Programming Assignment 1</title>
+</head><body text="#000000" bgcolor="#ffffff">
+
+<center>
+<h1> Programming Assignment 1</h1>
+
+<font size="+2"><b>Doubly Linked List in C</b></font>
+</center>
+
+<ol>
+
+<li><b>Objective</b><br>
+
+<p>
+The objective of this assignment is to practice/review 
+programming in C, including the use of C <b>structs</b> and 
+<b>pointers</b>, by implementing a doubly linked list which will be
+used in later programming assignments.
+</p>
+
+</li><li><b>Details</b><br>
+
+<p>
+Write a C program that will allow the user to enter MP3 data 
+of songs into a <b>doubly linked list</b>, remove MP3 entries
+by the artist's name, and display the contents of the list.
+</p>
+
+<p>
+You should have a single <code>.h</code> header file that declares 
+the MP3 struct.
+Your <code>.c</code> file(s) should <code>#include</code> the
+<code>.h</code> header file and contain all the actual C code.
+In this C struct you should have:
+</p><ul>
+  <li> The name of the artist stored in a <code>char*</code> </li>
+  <li> The title of the song stored in a <code>char*</code> </li>
+  <li> The run time in seconds stored as an <code>int</code> </li>
+  <li> A "next" pointer to another one of these structs (so you
+       can make a linked list) </li>
+  <li> A "prev" pointer to another one of these structs (so you can
+       make it a doubly linked list) </li>
+</ul>
+<p></p>
+
+<p>
+Once you have your struct, write a program to use it that will prompt
+the user to (1) add an MP3 to the list, (2) delete MP3(s) from the
+list, (3) print the list from the beginning to the end, (4) print the
+list from the end to the beginning, and <font color="red">(5) exit the
+program</font>.
+When adding an MP3, your program prompts 
+for each piece of information, and
+adds the MP3 to the <b>end/tail</b> of the list.
+When deleting, your program prompts for the name of the artist and
+deletes <b>all</b> the entries with that artist.
+When printing, start at one end of the list,
+traverse and print each MP3 until reaching the other end.
+<font color="red">When exiting the program,
+free all dynamically allocated
+memory to leave no memory leak</font>.
+You may use <code>fgets()</code> to input character strings
+(for artist name and song title)
+as shown in <a href="https://www.eecis.udel.edu/~cshen/361/PA_1_Linked_List/fgets.c">this example</a>. Read the man
+page of <code>fgets()</code> for details.
+</p>
+
+<p>
+Your input and output should make sense to the user.  
+</p>
+
+<p>
+Remember to always allocate memory for all your pointers to point at 
+valid memory with <code>malloc()</code> or <code>calloc()</code>. 
+Avoid dereferencing NULL pointers which will result in 
+segmentation faults unless you happen to get lucky!
+Also, check out
+<a href="http://www.codingunit.com/c-tutorial-call-by-value-or-call-by-reference">C tutorial on call-by-value and call-by-reference</a>.
+</p>
+
+</li>
+
+<li><b>Makefile and submission instructions<br></b>
+
+<p>You should create a makefile so that when TA types
+   "<code>make mp3</code>", an executable named <code>mp3</code>
+   is created. 
+
+</p><p>
+You should tar up your source code and the makefile, and
+submit the resulting tar file so that your program can be
+tested by TA. To do this, do the following.
+
+</p><ul>
+<li> In the current working directory, create a (sub-)directory 
+     named <code>proj_1</code> to store all your code
+     and the makefile.
+
+</li><li> <pre>tar cvf YourLastName_proj_1.tar proj_1</pre> 
+</li></ul>
+
+<p>
+To verify that your files are in the tar file, take a look at the table 
+of contents of the tar file like:
+</p><ul>
+<li> <pre>tar tvf YourLastName_proj_1.tar</pre>
+</li></ul>
+
+<p>
+Submit (upload) your tar file into Canvas. TAs will run your code
+under Valgrind to check for any memory leak.
+</p>
+
+</li>
+
+<li> <b>Sample code</b><br>
+
+<p>
+</p><ul>
+    <li> <a href="https://www.eecis.udel.edu/~cshen/361/PA_1_Linked_List/PA_1_sample_code.tar">sample MP3 code</a> (code base for this assignment)
+    </li><li> <a href="http://www.learn-c.org/en/Linked_lists">Another sample linked list code</a>
+    </li><li> YouTube: <a href="https://www.youtube.com/watch?v=JdQeNxWCguQ">Introduction to Doubly Linked List</a> </li>
+</ul>
+
+<p>
+
+</p></li><li> <b>Notes</b><br>
+
+<p>
+Your MP3 C struct in Project 1 should look something like this.
+
+</p><pre>typedef struct mp3 {
+  char       *name;
+  struct mp3 *next;
+} mp3_t;
+</pre>
+
+And, it should NEVER be something like the following.
+
+<pre>typedef struct mp3 {
+  char name[128];
+  struct mp3 *next;
+} mp3_t;
+</pre>
+
+Can you tell the difference? 
+
+<p>
+Try the following code on cisc361.acad to learn how
+<code>fgets()</code> works, how to dynamically allocate memory
+for each MP3 record, and how to dynamically allocate memory
+for the "name" field within each MP3 record.
+
+</p><p>
+Run the following <a href="https://www.eecis.udel.edu/~cshen/361/PA_1_Linked_List/struct.c">C program</a> on
+cisc361.cis.udel.edu under <code>valgrind</code> to see if there 
+is any memory leak. (There shouldn't be any.)
+
+</p><pre>// struct.c (in ~/361/PA_1)
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+#define BUFFERSIZE 128
+
+typedef struct mp3 {
+  char       *name;
+  struct mp3 *next;
+} mp3_t;
+
+int main (int argc, char *argv[])
+{
+  char  buffer[BUFFERSIZE];
+  mp3_t *mp3;
+  int   len;
+
+  printf("Enter a name: ");
+  if (fgets(buffer, BUFFERSIZE , stdin) != NULL)
+  {
+    len = (int) strlen(buffer);
+    printf("length [%d] of string %s", len, buffer); // notice the length!
+    buffer[len - 1] = '\0';                 // why minus 1 ???
+    mp3 = (mp3_t *) malloc(sizeof(mp3_t));
+    mp3-&gt;name = (char *) malloc(len);
+    strcpy(mp3-&gt;name, buffer);
+    printf("Name is [%s]...\n", mp3-&gt;name);
+  }
+  free(mp3-&gt;name);   // line free 1
+  free(mp3);         // line free 2
+  return 0;
+}
+-------------
+</pre>
+
+<p>
+Now, try to comment out <code>line free 1</code> and/or
+<code>line free 2</code>
+to see if there are memory leaks under <code>valgrind</code>.
+(There should be now.)
+
+</p><p>
+Also, can the order of <code>line free 1</code> and
+<code>line free 2</code> be switched???
+
+</p><p>
+Here is an excerpt from the man page of <code>fgets()</code>.
+
+</p><p>
+"<code>fgets(char *s, int size, FILE *stream)</code> reads in at 
+most one less than <code>size</code> characters
+from <code>stream<code> and stores them into the buffer pointed
+to by <code>s</code>. Reading
+stops after an EOF or a <font color="blue">newline</font>.
+<font color="red">If a newline is read, it is stored into the
+buffer.</font> A terminating null byte (<code>'\0'</code>) is stored
+after the last character in the buffer."
+
+</code></code></p><p><code><code>
+Try to comprehend it to understand why we need the "minus 1" in
+<code>buffer[len - 1] = '\0';</code>
+
+</code></code></p></li><code><code>
+
+</code></code></ol><code><code>
+
+</code></code></body></html>

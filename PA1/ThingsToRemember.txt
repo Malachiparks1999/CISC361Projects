@@ -1,0 +1,40 @@
+Things To Remember About DLL
+
+Header Information
+	Should only contain struct for mp3
+
+C Code Information
+
+1. Enter data for a new MP3 ---> Add function (Completed, adds to DLL)
+	
+2. Remove entries with same artists names (done)
+		* Remove from front (done)
+		* Remove from middle (done)
+		* remove from end (done)
+		* empty list? (done)
+		
+		* Traverse list ---> make it check artist case.
+				Then will remove accordingly
+	
+3. Print Linked List forwards and backwards (done)
+
+4. Needs to delete all malloc'd information to prevent memory leak (Done)
+
+5. Edit Main.c with the following changes
+	1a. Need to edit main.c to ensure that takes in all parameters for DLL (look at order in add.c) --- Done
+	2. Adding deleteItems declaration --- Done
+	3. make input for inserting be all lower case
+
+Makefile information
+		needs to compile deleteItems.c so functions correctly when called
+		"make mp3" to make the list
+		Need to relearn makefiles
+		
+##################################################################################################################
+
+When deleting --- should not exit when entering wrong information
+deleting middle node + end node (Does while loop ever iterate?) + multiple deletes
+printing backwards ---> Make print print useful information + Printing prompt
+free memory?
+Make adding print nicely of whats being added in main.c
+Make main.c prompt for name to be passed in so deletion occurs
